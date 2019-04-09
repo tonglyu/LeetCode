@@ -1,4 +1,6 @@
-package Leetcode;
+package Leetcode.Medium;
+
+import Leetcode.ListNode;
 
 /** 2. Add Two Numbers
  * You are given two non-empty linked lists representing two non-negative integers.
