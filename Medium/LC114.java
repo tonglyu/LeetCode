@@ -2,7 +2,8 @@ package Leetcode.Medium;
 
 import Leetcode.TreeNode;
 
-/** 114. Flatten Binary Tree to Linked List
+/**
+ * 114. Flatten Binary Tree to Linked List
  * Given a binary tree, flatten it to a linked list in-place.
  *
  * For example, given the following tree:
