@@ -1,5 +1,9 @@
 package Leetcode.Medium;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 91. Decode Ways
  * A message containing letters from A-Z is being encoded to numbers using the following mapping:
@@ -51,11 +55,47 @@ public class LC091 {
 		return dp[s.length()];
 	}
 
+	/**
+	 * Recursion +  Memorization
+	 * Time = O(1) * (n + 1) = O(n)
+	 * Space = O(n)
+	 */
+	public int numDecode(String s) {
+		if (s == null || s.length() == 0) {
+			return 0;
+		}
+		char[] arr = s.toCharArray();
+		int[] m = new int[s.length() + 1];
+		Arrays.fill(m,-1);
+		return ways(arr, arr.length - 1,m);
+	}
+
+	private int ways(char[] arr, int end, int[] m) {
+		if (end < 0)  {
+			return 1;
+		} else if (end == 0) {
+			m[end] = arr[end] == '0' ? 0 : 1;
+			return m[end];
+		}
+		if (m[end] != -1) {
+			return m[end];
+		}
+
+		int count = 0;
+		if (arr[end] != '0') count += ways(arr, end -1,m);
+		int lastTwo = (arr[end - 1] - '0' )* 10 + (arr[end] - '0');
+		if (lastTwo >= 10 && lastTwo <= 26) {
+			count += ways(arr,end-2,m);
+		}
+		m[end] = count;
+		return count;
+	}
+
 	public static void main(String[] args) {
 		LC091 sol = new LC091();
 		String[] str = new String[]{"0","01","10","12","226"};
 		for (String s:str) {
-			System.out.println(sol.numDecodings(s));
+			System.out.println(sol.numDecode(s));
 		}
 	}
 
