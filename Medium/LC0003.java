@@ -21,7 +21,7 @@ import java.util.Set;
  * Explanation: The answer is "wke", with the length of 3.
  *              Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
  */
-public class LC003 {
+public class LC0003 {
     /**
      * Data structure: two pointers, sliding window
      * left: the start index of the substring without repeating characters
@@ -58,7 +58,7 @@ public class LC003 {
     }
 
     public static void main(String[] args) {
-        LC003 sol = new LC003();
+        LC0003 sol = new LC0003();
         String s = "pwwkew";
         System.out.println(sol.lengthOfLongestSubstring(s));
     }

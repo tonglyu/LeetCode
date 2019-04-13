@@ -27,7 +27,7 @@ import Leetcode.TreeNode;
  *          \
  *           6
  */
-public class LC114 {
+public class LC0114 {
     /**
      * Recursive way
      * 1. Flatten the left and right sub-tree
@@ -85,7 +85,7 @@ public class LC114 {
     }
 
     public static void main(String[] args) {
-        LC114 sol = new LC114();
+        LC0114 sol = new LC0114();
         TreeNode root = new TreeNode(1);
         root.left = new TreeNode(2);
         root.left.left = new TreeNode(3);

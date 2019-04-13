@@ -14,7 +14,7 @@ import Leetcode.ListNode;
  * Output: 7 -> 0 -> 8
  * Explanation: 342 + 465 = 807.
  */
-public class LC002 {
+public class LC0002 {
     /**
      * Data structure: dummy node to store the head
      * Steps:
@@ -55,7 +55,7 @@ public class LC002 {
     }
 
     public static void main(String[] args) {
-        LC002 sol = new LC002();
+        LC0002 sol = new LC0002();
         ListNode l1 = new ListNode(2);
         l1.next = new ListNode(4);
         l1.next.next = new ListNode(3);

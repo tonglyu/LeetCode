@@ -15,7 +15,7 @@ package Leetcode.Easy;
  * Explanation: The longest continuous increasing subsequence is [2], its length is 1.
  * Note: Length of the array will not exceed 10,000.
  */
-public class LC674 {
+public class LC0674 {
 	/**
 	 * Data structure: dp array
 	 * Init: dp[0] = 1;
@@ -58,7 +58,7 @@ public class LC674 {
 	}
 
 	public static void main(String[] args) {
-		LC674 sol = new LC674();
+		LC0674 sol = new LC0674();
 		int[] nums = new int[]{2,2,2,2,2};
 		System.out.println(sol.findLengthOfLCISSpace(nums));
 	}

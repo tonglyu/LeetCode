@@ -27,7 +27,7 @@ import java.util.Map;
  * Notes:
  * You may assume pattern contains only lowercase letters, and str contains lowercase letters that may be separated by a single space.
  */
-public class LC290 {
+public class LC0290 {
 	/**
 	 * Data structure: Hashmap<Character, String>
 	 * Case1: if map contains pattern
@@ -62,7 +62,7 @@ public class LC290 {
 	}
 
 	public static void main(String[] args) {
-		LC290 sol = new LC290();
+		LC0290 sol = new LC0290();
 		String pattern = "abba";
 		String str = "dog cat cat dog";
 		System.out.println(sol.wordPattern(pattern, str));

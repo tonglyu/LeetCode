@@ -1,8 +1,6 @@
 package Leetcode.Medium;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 91. Decode Ways
@@ -23,7 +21,7 @@ import java.util.Map;
  * Output: 3
  * Explanation: It could be decoded as "BZ" (2 26), "VF" (22 6), or "BBF" (2 2 6).
  */
-public class LC091 {
+public class LC0091 {
 	/**
 	 * Data structure: dp
 	 * dp[0] = 1;
@@ -92,7 +90,7 @@ public class LC091 {
 	}
 
 	public static void main(String[] args) {
-		LC091 sol = new LC091();
+		LC0091 sol = new LC0091();
 		String[] str = new String[]{"0","01","10","12","226"};
 		for (String s:str) {
 			System.out.println(sol.numDecode(s));

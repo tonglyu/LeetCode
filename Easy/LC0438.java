@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LC438 {
+public class LC0438 {
 	/**
 	 * 438. Find All Anagrams in a String
 	 * Given a string s and a non-empty string p, find all the start indices of p's anagrams in s.
@@ -89,7 +89,7 @@ public class LC438 {
 	}
 
 	public static void main(String[] args) {
-		LC438 sol = new LC438();
+		LC0438 sol = new LC0438();
 		String s ="ababacbbaac";
 		String p = "aab";
 		List<Integer> res  = sol.findAnagrams(s,p);

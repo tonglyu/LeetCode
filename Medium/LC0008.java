@@ -37,7 +37,7 @@ package Leetcode.Medium;
  * Explanation: The number "-91283472332" is out of the range of a 32-bit signed integer.
  *              Thefore INT_MIN (−231) is returned.
  */
-public class LC008 {
+public class LC0008 {
 	/**
 	 * Pay attention to how to check whether a number overflow:
 	 * 1) sum > Integer.MAX_VALUE / 10
@@ -88,7 +88,7 @@ public class LC008 {
 	}
 
 	public static void main(String[] args) {
-		LC008 sol = new LC008();
+		LC0008 sol = new LC0008();
 		String[] strs = new String[]{""," ","+43","    -9", "4193 with words", "words and 987", "-2147483648"};
 		for (String str: strs) {
 			System.out.println(sol.myAtoi(str));

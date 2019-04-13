@@ -32,7 +32,7 @@ import java.util.Arrays;
  * the number of coins is less than 500
  * the answer is guaranteed to fit into signed 32-bit integer
  */
-public class LC518 {
+public class LC0518 {
 	/**
 	 * DFS:
 	 * 1. how many levels = number of coins
@@ -98,7 +98,7 @@ public class LC518 {
 
 
 	public static void main(String[] args) {
-		LC518 sol = new LC518();
+		LC0518 sol = new LC0518();
 		int amount = 500;
 		int[] coins = new int[]{3,5,7,8,9,10,11};
 		System.out.println(sol.change2(amount,coins));

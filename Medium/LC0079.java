@@ -20,7 +20,7 @@ package Leetcode.Medium;
  * Given word = "SEE", return true.
  * Given word = "ABCB", return false.
  */
-public class LC079 {
+public class LC0079 {
     /**
      * Data structure: boolean[][] visited
      * dfs
@@ -68,7 +68,7 @@ public class LC079 {
     }
 
     public static void main(String[] args) {
-        LC079 sol = new LC079();
+        LC0079 sol = new LC0079();
         char[][] board = new char[][]{
                 {'A', 'B', 'C', 'E'},
                 {'S', 'F', 'C', 'S'},

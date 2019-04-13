@@ -25,7 +25,7 @@ import java.util.LinkedList;
  * pushed is a permutation of popped.
  * pushed and popped have distinct values.
  */
-public class LC946 {
+public class LC0946 {
 	/**
 	 * Simulate the push/pop operation.
 	 *
@@ -48,7 +48,7 @@ public class LC946 {
 	}
 
 	public static void main(String[] args) {
-		LC946 sol = new LC946();
+		LC0946 sol = new LC0946();
 		int[] pushed = new int[]{1,2,3,4,5};
 		int[] popped = new int[]{4,5,3,2,1};
 		System.out.println(sol.validateStackSequences(pushed,popped));
