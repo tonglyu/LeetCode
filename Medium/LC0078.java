@@ -1,6 +1,8 @@
 package Leetcode.Medium;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -40,6 +42,20 @@ public class LC0078 {
 
 		List<Integer> sub = new ArrayList<>();
 		dfs(nums, 0, res, sub);
+		Collections.sort(res, new Comparator<List<Integer>>() {
+			@Override
+			public int compare(List<Integer> o1, List<Integer> o2) {
+				if (o1.size()!= o2.size()) {
+					return o1.size() - o2.size();
+				}
+				for (int i = 0; i < o1.size(); i++) {
+					if (o1.get(i) != o2.get(i)) {
+						return o1.get(i) - o2.get(i);
+					}
+				}
+				return 0;
+			}
+		});
 		return res;
 	}
 
@@ -58,7 +74,7 @@ public class LC0078 {
 
 	public static void main(String[] args) {
 		LC0078 sol = new LC0078();
-		int[] nums = new int[]{1, 2, 3};
+		int[] nums = new int[]{6,5,9};
 		List<List<Integer>> res = sol.subsets(nums);
 		System.out.println(res);
 	}
