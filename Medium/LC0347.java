@@ -91,6 +91,13 @@ public class LC0347 {
 			if (bucket[i] == null) {
 				continue;
 			}
+			// sort the inner order of each bucket
+			bucket[i].sort(new Comparator<Integer>() {
+				@Override
+				public int compare(Integer o1, Integer o2) {
+					return o2 - o1;
+				}
+			});
 			for (int num: bucket[i]) {
 				if (res.size() < k) {
 					res.add(num);
