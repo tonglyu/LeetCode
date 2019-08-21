@@ -62,6 +62,7 @@ public class LC0239 {
 	public int[] maxSlidingWindow2(int[] nums, int k) {
 		if (k == 0) return nums;
 
+		//# of sliding window = n - ( k -1 )
 		int[] res = new int[nums.length - k + 1];
 		Deque<Integer> q = new LinkedList<>();
 
@@ -78,6 +79,7 @@ public class LC0239 {
 
 			q.offerLast(i);
 
+			// i - (k - 1) is head index
 			if (i - k + 1 >= 0) {
 				res[i-k + 1] = nums[q.peekFirst()];
 			}
