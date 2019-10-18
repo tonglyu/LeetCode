@@ -28,7 +28,7 @@ public class LC0240 {
 	 * if target > center, target cannot be in the top left partition
 	 * if target < center, target cannot be in the botton right partition
 	 *
-	 * Time = ((MN)log4(3))?
+	 * Time = O(log_(4/3)(mn))
 	 * Space = O(max(m,n))
 	 */
 	public boolean searchMatrix(int[][] matrix, int target) {
@@ -39,10 +39,10 @@ public class LC0240 {
 		int m = matrix.length;
 		int n = matrix[0].length;
 
-		return bs(matrix, target, new int[]{0, 0}, new int[]{m - 1, n - 1});
+		return binarySearch(matrix, target, new int[]{0, 0}, new int[]{m - 1, n - 1});
 	}
 
-	private boolean bs(int[][] matrix, int target, int[] upperLeft, int[] lowerRight) {
+	private boolean binarySearch(int[][] matrix, int target, int[] upperLeft, int[] lowerRight) {
 		int m = matrix.length;
 		int n = matrix[0].length;
 
@@ -59,18 +59,19 @@ public class LC0240 {
 		if (matrix[r][c] == target) {
 			return true;
 		} else if (matrix[r][c] > target) {
-			return bs(matrix, target, upperLeft, new int[]{r, c})
-					|| bs(matrix, target, new int[]{upperLeft[0], c + 1}, new int[]{r, lowerRight[1]})
-					|| bs(matrix, target, new int[]{r + 1, upperLeft[1]}, new int[]{lowerRight[0], c});
+			return binarySearch(matrix, target, upperLeft, new int[]{r, c})
+					|| binarySearch(matrix, target, new int[]{upperLeft[0], c + 1}, new int[]{r, lowerRight[1]})
+					|| binarySearch(matrix, target, new int[]{r + 1, upperLeft[1]}, new int[]{lowerRight[0], c});
 		} else {
-			return bs(matrix, target, new int[]{upperLeft[0], c + 1}, new int[]{r, lowerRight[1]})
-					|| bs(matrix, target, new int[]{r + 1, upperLeft[1]}, new int[]{lowerRight[0], c})
-					|| bs(matrix, target, new int[]{r + 1, c + 1}, lowerRight);
+			return binarySearch(matrix, target, new int[]{upperLeft[0], c + 1}, new int[]{r, lowerRight[1]})
+					|| binarySearch(matrix, target, new int[]{r + 1, upperLeft[1]}, new int[]{lowerRight[0], c})
+					|| binarySearch(matrix, target, new int[]{r + 1, c + 1}, lowerRight);
 		}
 	}
 
 	/**
 	 * Method2: Search Space Reduction
+	 * The matrix is like a BST from top right
 	 * Init: r = 0, c = n - 1
 	 * Each time, we check the top right element in the matrix:
 	 *  1) if ele = target, return true
@@ -88,7 +89,7 @@ public class LC0240 {
 		int m = matrix.length;
 		int n = matrix[0].length;
 
-		int r = 0, c= n -1;
+		int r = 0, c = n - 1;
 		while (r < m && c >= 0) {
 			if (matrix[r][c] == target) {
 				return true;
