@@ -1,4 +1,4 @@
-package Leetcode.Medium;
+package Leetcode.Easy;
 
 /**
  * 283. Move Zeroes
