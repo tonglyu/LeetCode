@@ -41,7 +41,10 @@ public class LC0005 {
 		boolean[][] dp = new boolean[s.length()][s.length()];
 		for (int j = 0; j < len; j++) {
 			for (int i = 0; i <= j; i++) {
-				if ((j- i <= 2|| dp[i+1][j-1]) && s.charAt(i) == s.charAt(j)) {
+				// Case1: i == j, s[i] == s[j]
+				// Case2: i+1 == j, s[i] == s[j]
+				// Case3: dp[i+1][j-1], s[i] == s[j]
+				if ((j - i <= 2|| dp[i+1][j-1]) && s.charAt(i) == s.charAt(j)) {
 					dp[i][j] = true;
 					if (j - i + 1 > max) {
 						max = j - i + 1;
@@ -63,7 +66,8 @@ public class LC0005 {
 	 * Time = O(n^2)
 	 * Space = O(1)
 	 */
-	String ans = "";
+	int max;
+	int start;
 	public String longestPalindrome2(String s) {
 		if (s == null || s.length() == 0) {
 			return "";
@@ -74,7 +78,7 @@ public class LC0005 {
 			helper(s,i,i+1);
 		}
 
-		return ans;
+		return s.substring(start, start + max);
 	}
 
 	private void helper(String s, int left, int right) {
@@ -83,9 +87,9 @@ public class LC0005 {
 			right++;
 		}
 
-		String cur = s.substring(left + 1, right);
-		if (cur.length() > ans.length()) {
-			ans = cur;
+		if (right - left - 1 > max) {
+			max = right - left - 1;
+			start = left + 1;
 		}
 	}
 
