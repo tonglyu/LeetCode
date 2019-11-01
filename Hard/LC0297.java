@@ -94,6 +94,12 @@ class Codec1 {
 	}
 }
 
+/**
+ * Method2: DFS recursion
+ *
+ * Time = O(n)
+ * Space = O(height)
+ */
 class Codec2 {
 	public String serialize(TreeNode root) {
 		if (root == null) return "";
@@ -121,6 +127,7 @@ class Codec2 {
 	}
 	private TreeNode dfs(String[] node, int[] idx) {
 		if (node[idx[0]].equals("null")) {
+			//increase index for each null
 			idx[0]++;
 			return null;
 		}
@@ -128,6 +135,7 @@ class Codec2 {
 		TreeNode cur = new TreeNode(Integer.valueOf(node[idx[0]]));
 		idx[0]++;
 		cur.left = dfs(node, idx);
+		//we do not need to increase index after recursive, because when we complete constructing the subtree, we must reach the null
 		cur.right = dfs(node, idx);
 		return cur;
 	}
