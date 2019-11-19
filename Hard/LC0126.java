@@ -1,5 +1,9 @@
 package Leetcode.Hard;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.JUnitCore;
+
 import java.util.*;
 
 /**
@@ -40,9 +44,10 @@ import java.util.*;
  */
 public class LC0126 {
 	/**
-	 * BFS + DFS
+	 * Solution: BFS + DFS
+	 * BFS to construct the graph, and DFS to find all possible paths
 	 * Map<String, List> parents: record the previous word for each word in the path.
-	 * Map<String, Integer> height: record the level of current node in case one word have multiple parents in the paths
+	 * Map<String, Integer> steps: record the min steps when expanding current node in case one word have multiple parents in the paths
 	 * flag: indicate whether the end word has been found. If found, we just need to complete current level
 	 *
 	 * When expand each word:
@@ -65,13 +70,14 @@ public class LC0126 {
 	public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
 		Set<String> dict = new HashSet<>(wordList);
 		List<List<String>> res = new ArrayList<>();
-		if (!dict.contains(endWord)) return res;
+		if (!dict.contains(endWord)) {
+			return res;
+		}
 		// beginword will enlarge the steps
 		dict.remove(beginWord);
-		//dict.remove(endWord);
 
-		Map<String, Integer> height = new HashMap<>();
-		height.put(beginWord, 1);
+		Map<String, Integer> steps = new HashMap<>();
+		steps.put(beginWord, 1);
 		Map<String, List<String>> parents = new HashMap<>();
 		Queue<String> q = new ArrayDeque<>();
 		q.offer(beginWord);
@@ -80,46 +86,45 @@ public class LC0126 {
 		boolean found = false;
 
 		while (!q.isEmpty() && !found) {
+			int size = q.size();
 			step++;
-			for (int s = q.size(); s > 0; --s) {
-				String parent = q.poll();
-				char[] word = parent.toCharArray();
-				for (int i = 0; i < word.length; ++i) {
-					char ch = word[i];
-					for (char c = 'a'; c <= 'z'; ++c) {
-						if (c == ch) continue;
-						word[i] = c;
-						String w = new String(word);
-						if (endWord.equals(w)) {
-							if (parents.get(w) == null) {
-								parents.put(w, new ArrayList<>());
-							}
-							parents.get(w).add(parent);
+			for (int i = 0; i < size; i++) {
+				String word = q.poll();
+				char[] arr = word.toCharArray();
+				for (int j = 0; j < arr.length; ++j) {
+					char c = arr[j];
+					for (char w = 'a'; w <= 'z'; ++w) {
+						if (w == c) continue;
+						arr[j] = w;
+						String cur = new String(arr);
+						if (endWord.equals(cur)) {
+							parents.putIfAbsent(cur, new ArrayList<>());
+							parents.get(cur).add(word);
 							found = true;
 						}  else {
-							// w has already been expanded
-							// w is not a new word, but another transformation with the same steps
-							// which means w has other parents.
-							if (height.get(w) != null && height.get(w) == step) {
-								parents.get(w).add(parent);
+							// cur has already been expanded
+							// cur is not a new word, but another transformation with the same steps,
+							// which means cur has other parents.
+							// if step > steps.get(cur), means we spend more steps to reach cur, which make no sense
+							if (steps.get(cur) != null && steps.get(cur) == step) {
+								parents.get(cur).add(word);
 							} else {
 								// a new word
-								if (!dict.contains(w)) continue;
-								dict.remove(w);
-								q.offer(w);
-								height.put(w, height.get(parent) + 1);
-								if (parents.get(w) == null) {
-									parents.put(w, new ArrayList<>());
-								}
-								parents.get(w).add(parent);
+								if (!dict.contains(cur)) continue;
+								dict.remove(cur);
+								q.offer(cur);
+								steps.put(cur, steps.get(word) + 1);
+								parents.putIfAbsent(cur, new ArrayList<>());
+								parents.get(cur).add(word);
 							}
 						}
 					}
-					word[i] = ch;
+					arr[j] = c;
 				}
 			}
 		}
 
+		//DFS to find all possible paths
 		if (found) {
 			List<String> path = new ArrayList<>();
 			path.add(endWord);
@@ -142,13 +147,39 @@ public class LC0126 {
 		}
 	}
 
-	public static void main(String[] args) {
-		LC0126 sol = new LC0126();
+	@Test
+	public void test1() {
 		String beginWord = "red";
 		String endWord = "tax";
-		String[] wordList = new String[]{"rex", "ted", "tex", "tad", "tax"};
+		List<String> wordList = new ArrayList<>(Arrays.asList("rex", "ted", "tex", "tad", "tax"));
+		List<List<String>> act = findLadders(beginWord, endWord, wordList);
+		List<List<String>> exp = new ArrayList<>(Arrays.asList(Arrays.asList("red","ted","tad","tax"),
+				Arrays.asList("red","ted","tex","tax"),Arrays.asList("red","rex","tex","tax")));
+		Assert.assertTrue(act.containsAll(exp) && exp.containsAll(act));
+	}
 
-		List<List<String>> res = sol.findLadders(beginWord, endWord, Arrays.asList(wordList));
-		System.out.println(res);
+	@Test
+	public void test2() {
+		String beginWord = "hit";
+		String endWord = "cog";
+		List<String> wordList = new ArrayList<>(Arrays.asList("hot","dot","dog","lot","log","cog"));
+		List<List<String>> act = findLadders(beginWord, endWord, wordList);
+		List<List<String>> exp = new ArrayList<>(Arrays.asList(Arrays.asList("hit","hot","dot","dog","cog"),
+				Arrays.asList("hit","hot","lot","log","cog")));
+		Assert.assertTrue(act.containsAll(exp) && exp.containsAll(act));
+	}
+
+	@Test
+	public void test3() {
+		String beginWord = "hit";
+		String endWord = "cog";
+		List<String> wordList = new ArrayList<>(Arrays.asList("hot","dot","dog","lot","log"));
+		List<List<String>> act = findLadders(beginWord, endWord, wordList);
+		List<List<String>> exp = new ArrayList<>();
+		Assert.assertTrue(act.containsAll(exp) && exp.containsAll(act));
+	}
+
+	public static void main(String[] args) {
+		JUnitCore.main(LC0126.class.getName());
 	}
 }
