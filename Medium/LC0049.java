@@ -1,5 +1,9 @@
 package Leetcode.Medium;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.JUnitCore;
+
 import java.util.*;
 
 /**
@@ -23,7 +27,7 @@ import java.util.*;
 public class LC0049 {
 	/**
 	 * Data structure: map
-	 * key = letters + #, value = list of anagrams
+	 * key = letters + #(e.g. b1u1y1), value = list of anagrams
 	 * e.g. a1e1t1, ate, eat, tea
 	 *
 	 * For each string:
@@ -55,9 +59,7 @@ public class LC0049 {
 			}
 
 			String key = sb.toString();
-			if (map.get(key) == null) {
-				map.put(key, new ArrayList<>());
-			}
+			map.putIfAbsent(key, new ArrayList<>());
 			map.get(key).add(s);
 		}
 
@@ -72,10 +74,32 @@ public class LC0049 {
 		return new ArrayList<>(map.values());
 	}
 
-	public static void main(String[] args) {
-		LC0049 sol = new LC0049();
+	@Test
+	public void test1() {
 		String[] strs = new String[]{"eat", "tea", "tan", "ate", "nat", "bat"};
-		List<List<String>> res = sol.groupAnagrams(strs);
-		System.out.println(res);
+
+		List<Set<String>> exp = Arrays.asList(new HashSet<>(Arrays.asList("ate","eat","tea")),
+				new HashSet<>(Arrays.asList("nat","tan")),new HashSet<>(Arrays.asList("bat")));
+		List<List<String>> res = groupAnagrams(strs);
+		List<Set<String>> act = new ArrayList<>();
+		for (List<String> list: res) {
+			act.add(new HashSet<>(list));
+		}
+		Assert.assertTrue(exp.containsAll(act) && act.containsAll(exp));
+	}
+
+	@Test
+	public void test2() {
+		String[] strs = new String[]{"cab","tin","pew","duh","may","ill","buy","bar","max","doc"};
+
+		List<List<String>> exp = new ArrayList<>(Arrays.asList(Arrays.asList("cab"),Arrays.asList("tin"),
+				Arrays.asList("pew"),Arrays.asList("duh"),Arrays.asList("may"),Arrays.asList("ill"),
+				Arrays.asList("buy"),Arrays.asList("bar"),Arrays.asList("max"),Arrays.asList("doc")));
+		List<List<String>> act = groupAnagrams(strs);
+		Assert.assertTrue(exp.containsAll(act) && act.containsAll(exp));
+	}
+
+	public static void main(String[] args) {
+		JUnitCore.main(LC0049.class.getName());
 	}
 }
