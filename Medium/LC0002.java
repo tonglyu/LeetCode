@@ -1,6 +1,9 @@
 package Leetcode.Medium;
 
 import Leetcode.ListNode;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.JUnitCore;
 
 /**
  * 2. Add Two Numbers
@@ -44,18 +47,18 @@ public class LC0002 {
                 l2 = l2.next;
             }
             curr.next = new ListNode(sum % 10);
-            curr = curr.next;
             carry = sum / 10;
+            curr = curr.next;
         }
-        // The carry is the most significant digit
+        // The carry is the most significant digit (have an extra carry of one at the end)
         if (carry != 0) {
             curr.next = new ListNode(carry);
         }
         return dummy.next;
     }
 
-    public static void main(String[] args) {
-        LC0002 sol = new LC0002();
+    @Test
+    public void test1() {
         ListNode l1 = new ListNode(2);
         l1.next = new ListNode(4);
         l1.next.next = new ListNode(3);
@@ -63,10 +66,57 @@ public class LC0002 {
         l2.next = new ListNode(6);
         l2.next.next = new ListNode(4);
 
-        ListNode res = sol.addTwoNumbers(l1,l2);
-        while (res != null) {
-            System.out.println(res.val);
-            res = res.next;
+        ListNode exp = new ListNode(7);
+        exp.next = new ListNode(0);
+        exp.next.next = new ListNode(8);
+
+        ListNode act = addTwoNumbers(l1, l2);
+        while (exp != null || act != null) {
+            Assert.assertTrue(exp.val == act.val);
+            exp = exp.next;
+            act = act.next;
         }
+    }
+
+    @Test
+    public void test2() {
+        ListNode l1 = new ListNode(0);
+        l1.next = new ListNode(1);
+        ListNode l2 = new ListNode(0);
+        l2.next = new ListNode(9);
+        l2.next.next = new ListNode(2);
+
+        ListNode exp = new ListNode(0);
+        exp.next = new ListNode(0);
+        exp.next.next = new ListNode(3);
+
+        ListNode act = addTwoNumbers(l1, l2);
+        while (exp != null || act != null) {
+            Assert.assertTrue(exp.val == act.val);
+            exp = exp.next;
+            act = act.next;
+        }
+    }
+
+    @Test
+    public void test3() {
+        ListNode l1 = new ListNode(9);
+        l1.next = new ListNode(9);
+        ListNode l2 = new ListNode(1);
+
+        ListNode exp = new ListNode(0);
+        exp.next = new ListNode(0);
+        exp.next.next = new ListNode(1);
+
+        ListNode act = addTwoNumbers(l1, l2);
+        while (exp != null || act != null) {
+            Assert.assertTrue(exp.val == act.val);
+            exp = exp.next;
+            act = act.next;
+        }
+    }
+
+    public static void main(String[] args) {
+        JUnitCore.main(LC0002.class.getName());
     }
 }
