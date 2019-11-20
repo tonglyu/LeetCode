@@ -1,5 +1,9 @@
 package Leetcode.Medium;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.JUnitCore;
+
 /**
  * 79. Word Search
  * Given a 2D board and a word, find if the word exists in the grid.
@@ -22,26 +26,23 @@ package Leetcode.Medium;
  */
 public class LC0079 {
     /**
-     * Data structure: boolean[][] visited
-     * dfs
-     *
+     * Solution1: DFS
      * 1) #Levels = word.length()
-     * 2) Every level represent a letter, in each level check if it equals to the target.
+     * 2) Each level has 4 directions, represent a letter, in each level check if it equals to the target.
      * 3) Termination: when the last index is checked, return true.
      *
-     * Time = O(n2 * k) k = word.length
-     * Space = O(n2)
+     * Time = O(n^2 * 4^l) l = word.length
+     * Space = O(l) l for stack
      */
 
     public boolean exist(char[][] board, String word) {
         if (word == null || word.length() == 0) {
             return true;
         }
-        char[] target = word.toCharArray();
-        boolean[][] visited = new boolean[board.length][board[0].length];
+
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (dfs(board, target, i, j, 0, visited)) {
+                if (dfs(board, word, i, j, 0)) {
                     return true;
                 }
             }
@@ -49,32 +50,61 @@ public class LC0079 {
         return false;
     }
 
-    private boolean dfs(char[][] board, char[] target, int row, int col, int idx, boolean[][] visited) {
-        if (idx == target.length) {
+    private boolean dfs(char[][] board, String word, int row, int col, int idx) {
+        if (idx == word.length()) {
             return true;
         }
 
         if (row < 0 || row == board.length || col < 0 || col == board[0].length
-                ||board[row][col] != target[idx] || visited[row][col])  {
+                ||board[row][col] != word.charAt(idx))  {
             return false;
         }
 
-        visited[row][col] = true;
-        boolean exist = dfs(board, target, row + 1, col, idx + 1, visited) || dfs(board, target, row - 1, col, idx + 1,visited)
-        || dfs(board, target, row, col - 1, idx + 1, visited) || dfs(board, target, row, col + 1,idx + 1, visited);
-        visited[row][col] = false;
+        char c = board[row][col];
+        // Use '#' to represent current char has been visited
+        board[row][col] = '#';
+        boolean res = dfs(board, word, row + 1, col, idx + 1) || dfs(board, word, row - 1, col, idx + 1)
+        || dfs(board, word, row, col - 1, idx + 1) || dfs(board, word, row, col + 1,idx + 1);
+        board[row][col] = c;
 
-        return exist;
+        return res;
     }
 
-    public static void main(String[] args) {
-        LC0079 sol = new LC0079();
+    @Test
+    public void test1() {
         char[][] board = new char[][]{
                 {'A', 'B', 'C', 'E'},
                 {'S', 'F', 'C', 'S'},
                 {'A', 'D', 'E', 'E'}
         };
-        String word = "SEE";
-        System.out.println(sol.exist(board,word));
+        String w = "ABCCED";
+        Assert.assertTrue(exist(board,w));
     }
+
+    @Test
+    public void test2() {
+        char[][] board = new char[][]{
+                {'A', 'B', 'C', 'E'},
+                {'S', 'F', 'C', 'S'},
+                {'A', 'D', 'E', 'E'}
+        };
+        String w = "SEE";
+        Assert.assertTrue(exist(board,w));
+    }
+
+    @Test
+    public void test3() {
+        char[][] board = new char[][]{
+                {'A', 'B', 'C', 'E'},
+                {'S', 'F', 'C', 'S'},
+                {'A', 'D', 'E', 'E'}
+        };
+        String w = "ABCB";
+        Assert.assertTrue(!exist(board,w));
+    }
+
+    public static void main(String[] args) {
+        JUnitCore.main(LC0079.class.getName());
+    }
+
 }
