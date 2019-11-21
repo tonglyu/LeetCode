@@ -42,7 +42,7 @@ public class LC0033 {
 			int mid = left + (right - left) / 2;
 			if  (nums[mid] == target) {
 				return mid;
-			} else if (nums[left] <= nums[mid]) {
+			} else if (nums[left] <= nums[mid]) {//we cannot removes equal sign here, cuz left might equals to mid, see case3
 				if (target >= nums[left] && target < nums[mid]) {
 					right = mid - 1;
 				} else {
@@ -72,6 +72,13 @@ public class LC0033 {
 		int[] nums = new int[]{4,5,6,7,0,1,2};
 		int target = 3;
 		Assert.assertEquals(-1, search(nums, target));
+	}
+
+	@Test
+	public void test3() {
+		int[] nums = new int[]{3,1};
+		int target = 1;
+		Assert.assertEquals(1, search(nums, target));
 	}
 
 	public static void main(String[] args) {
